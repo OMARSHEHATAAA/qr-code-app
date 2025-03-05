@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+    <link rel="stylesheet" href="../static/style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .btn { padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px; margin: 5px; text-decoration: none; color: white; display: inline-block; }
+        .students-btn { background-color: #007bff; }
+        .students-btn:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <h1>Student Registration System 📌</h1>
+
+    <div id="qr-container">
+        <h3>Scan the QR Code to register</h3>
+        <img id="qr-code" src="" alt="QR Code" width="600">
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="/students" class="btn students-btn">View students 👀</a>
+    </div>
+
+    <script>
+        var socket = io.connect("http://" + document.domain + ":" + location.port);
+
+        socket.on("update_qr", function(data) {
+            document.getElementById("qr-code").src = data.qr_code;  // ✅ تحديث QR Code تلقائيًا كل ثانيتين
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register yourself</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+
+    <h1>Register a new student ✍️</h1>
+    <form id="register-form">
+       
+        <input type="text" id="student_name" name="student_name" placeholder="Name" required>
+        <input type="text" id="student_id" name="student_id" placeholder="ID" required>
+        <button type="submit">Sign ✅</button>
+    </form>
+
+    <script>
+        document.getElementById("register-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // منع إعادة تحميل الصفحة
+
+            var studentID = document.getElementById("student_id").value;
+            var studentName = document.getElementById("student_name").value;
+
+            // إرسال البيانات إلى السيرفر
+            fetch(window.location.pathname, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ student_id: studentID, student_name: studentName })
+            }).then(response => {
+                if (response.ok) {
+                    alert("✅ تم تسجيل اسمك بنجاح");
+                    document.getElementById("register-form").reset(); // مسح الحقول بعد التسجيل
+                } else {
+                    alert("❌ حدث خطأ، حاول مرة أخرى.");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
